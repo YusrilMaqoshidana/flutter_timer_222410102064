@@ -2,9 +2,34 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
 void main() {
-  runApp(const TimerApp());
+  runApp(const Appbar());
+}
+
+class Appbar extends StatelessWidget {
+  const Appbar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 44, 120, 101),
+          centerTitle: true,
+          title: const Text(
+            "T I M E R",
+            style: TextStyle(
+                fontFamily: "Poppins",
+                fontSize: 24,
+                fontWeight: FontWeight.bold),
+            selectionColor: Colors.white,
+          ),
+        ),
+        body: const TimerApp(),
+      ),
+    );
+  }
 }
 
 class TimerApp extends StatefulWidget {
@@ -15,10 +40,10 @@ class TimerApp extends StatefulWidget {
 }
 
 class _TimerAppState extends State<TimerApp> {
-  bool showTextField = false;
-  bool isStarted = false;
-  bool isSetting = false;
-  late Timer _timer;
+  bool showTextField = false; // untuk menganti jam ke mode input dan read
+  bool isStarted = false; // untuk mengubah text button start atau stop
+  bool isSetting = false; // untuk mengubah text atur waktu atau reset
+  late Timer _timer; // variabel _timer untuk
   int seconds = 0;
   int minutes = 0;
   int hours = 0;
@@ -82,20 +107,8 @@ class _TimerAppState extends State<TimerApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 44, 120, 101),
-          centerTitle: true,
-          title: const Text(
-            "T I M E R",
-            style: TextStyle(
-                fontFamily: "Poppins",
-                fontSize: 24,
-                fontWeight: FontWeight.bold),
-            selectionColor: Colors.white,
-          ),
-        ),
         body: Container(
-          color: Color.fromARGB(255, 156, 175, 170),
+          color: const Color.fromARGB(255, 156, 175, 170),
           child: Column(
             children: [
               const SizedBox(
