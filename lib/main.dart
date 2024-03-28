@@ -43,14 +43,16 @@ class _TimerAppState extends State<TimerApp> {
   bool showTextField = false; // untuk menganti jam ke mode input dan read
   bool isStarted = false; // untuk mengubah text button start atau stop
   bool isSetting = false; // untuk mengubah text atur waktu atau reset
-  late Timer _timer; // variabel _timer untuk implementasi durasi bisa berjalan 
+  late Timer _timer; // variabel _timer untuk implementasi durasi bisa berjalan
   int seconds = 0; // variabel detik
   int minutes = 0; // vaariabel menit
   int hours = 0; // variabel jam
 
-  void startCountdown() { // function untuk menghitung mundur 
+  void startCountdown() {
+    // function untuk menghitung mundur
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() { // untuk refresh setiap 1 detik
+      setState(() {
+        // untuk refresh setiap 1 detik
         if (seconds == 0) {
           if (minutes == 0) {
             if (hours == 0) {
@@ -71,7 +73,8 @@ class _TimerAppState extends State<TimerApp> {
     });
   }
 
-  void toggleButtonSetting() { // function untuk mengganti text di button atur waktu dan untuk reset variabel kembali 0
+  void toggleButtonSetting() {
+    // function untuk mengganti text di button atur waktu dan untuk reset variabel kembali 0
     if (isSetting) {
       showTextField = false;
       isStarted = false;
@@ -89,11 +92,13 @@ class _TimerAppState extends State<TimerApp> {
     });
   }
 
-  void toggleButtonStart() { // function untuk memulai perhitungan
-    if (!isStarted) { // dengan memanggil function startCouuntdown
+  void toggleButtonStart() {
+    // function untuk memulai perhitungan
+    if (!isStarted) {
+      // dengan memanggil function startCouuntdown
       startCountdown();
     } else {
-      _timer.cancel(); // menghentikan perhitungan 
+      _timer.cancel(); // menghentikan perhitungan
     }
     setState(() {
       isStarted = !isStarted;
@@ -113,97 +118,110 @@ class _TimerAppState extends State<TimerApp> {
               const SizedBox(
                 height: 200,
               ),
-              const Row(  // berisi text penjelas waktu 
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text("Hours"),
-                  Text(" "),
-                  Text("Minutes"),
-                  Text(""),
-                  Text("Seconds"),
-                ],
+              Container(
+                padding: EdgeInsets.only(bottom: 30, top: 30),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  children: [
+                    // berisi text penjelas waktu
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text("Hours"),
+                        Text(" "),
+                        Text("Minutes"),
+                        Text(""),
+                        Text("Seconds"),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        showTextField // berisi input angka dan read angka inputan
+                            ? Expanded(
+                                child: TextField(
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(2),
+                                  ],
+                                  textAlign: TextAlign.center,
+                                  onChanged: (value) {
+                                    // memasukan inputan ke variabel
+                                    hours = int.tryParse(value) ?? 00;
+                                  },
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(
+                                    hintText: 'HH',
+                                  ),
+                                ),
+                              )
+                            : Text(
+                                "$hours",
+                                style: const TextStyle(
+                                    fontFamily: "DS-DIGIB",
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                        const Text(":"),
+                        showTextField
+                            ? Expanded(
+                                child: TextField(
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(2),
+                                  ],
+                                  textAlign: TextAlign.center,
+                                  onChanged: (value) {
+                                    minutes = int.tryParse(value) ?? 00;
+                                  },
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(
+                                    hintText: 'HH',
+                                  ),
+                                ),
+                              )
+                            : Text(
+                                "$minutes",
+                                style: const TextStyle(
+                                    fontFamily: "DS-DIGIB",
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                        const Text(":"),
+                        showTextField
+                            ? Expanded(
+                                child: TextField(
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(2),
+                                  ],
+                                  textAlign: TextAlign.center,
+                                  onChanged: (value) {
+                                    seconds = int.tryParse(value) ?? 00;
+                                  },
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    hintText: 'HH',
+                                  ),
+                                ),
+                              )
+                            : Text(
+                                "$seconds", // pemanggilan variabel
+                                style: const TextStyle(
+                                    fontFamily: "DS-DIGIB",
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  showTextField // berisi input angka dan read angka inputan
-                      ? Expanded(
-                          child: TextField(
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(2),
-                            ],
-                            textAlign: TextAlign.center,
-                            onChanged: (value) { // memasukan inputan ke variabel
-                              hours = int.tryParse(value) ?? 00;
-                            },
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              hintText: 'HH',
-                            ),
-                          ),
-                        )
-                      : Text(
-                          "$hours",
-                          style: const TextStyle(
-                              fontFamily: "DS-DIGIB",
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold),
-                        ),
-                  const Text(":"),
-                  showTextField
-                      ? Expanded(
-                          child: TextField(
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(2),
-                            ],
-                            textAlign: TextAlign.center,
-                            onChanged: (value) {
-                              minutes = int.tryParse(value) ?? 00;
-                            },
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              hintText: 'HH',
-                            ),
-                          ),
-                        )
-                      : Text(
-                          "$minutes",
-                          style: const TextStyle(
-                              fontFamily: "DS-DIGIB",
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold),
-                        ),
-                  const Text(":"),
-                  showTextField
-                      ? Expanded(
-                          child: TextField(
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(2),
-                            ],
-                            textAlign: TextAlign.center,
-                            onChanged: (value) {
-                              seconds = int.tryParse(value) ?? 00;
-                            },
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              hintText: 'HH',
-                            ),
-                          ),
-                        )
-                      : Text(
-                          "$seconds", // pemanggilan variabel 
-                          style: const TextStyle(
-                              fontFamily: "DS-DIGIB",
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold),
-                        ),
-                ],
-              ),
-              const SizedBox(
-                height: 250,
+                height: 220,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -218,7 +236,9 @@ class _TimerAppState extends State<TimerApp> {
                       backgroundColor: Color.fromARGB(255, 253, 164, 3),
                     ),
                     child: Text(
-                      isSetting ? "Reset" : "Atur waktu", // teks berganti tergantung variabel bool 
+                      isSetting
+                          ? "Reset"
+                          : "Atur waktu", // teks berganti tergantung variabel bool
                       style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 16,
@@ -237,7 +257,9 @@ class _TimerAppState extends State<TimerApp> {
                       backgroundColor: isStarted ? Colors.red : Colors.green,
                     ),
                     child: Text(
-                      isStarted ? "Stop" : "Start", // teks berganti tergantung variabel bool
+                      isStarted
+                          ? "Stop"
+                          : "Start", // teks berganti tergantung variabel bool
                       style: const TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 20,
