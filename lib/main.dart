@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  runApp(const Appbar());
+  runApp(const Navigasi());
 }
 
-class Appbar extends StatelessWidget {
-  const Appbar({super.key});
+class Navigasi extends StatelessWidget {
+  const Navigasi({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class Appbar extends StatelessWidget {
           backgroundColor: Color.fromARGB(255, 44, 120, 101),
           centerTitle: true,
           title: const Text(
-            "T I M E R",
+            "Flutter_Timer_222410102064",
             style: TextStyle(
                 fontFamily: "Poppins",
                 fontSize: 24,
@@ -269,7 +269,10 @@ class _TimerAppState extends State<TimerApp> {
                     ),
                   ),
                 ],
-              )
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                child: Text("Moh. Yusril Maqoshidana_222410102064", style: TextStyle(fontSize: 12),))
             ],
           ),
         ),
